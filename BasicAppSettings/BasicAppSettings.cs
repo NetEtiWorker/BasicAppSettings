@@ -706,7 +706,6 @@ namespace NetEti.ApplicationEnvironment
             string? newTempDirectory = this.GetStringValue("TEMP", "");
             if (newTempDirectory != null)
             {
-
                 this.TempDirectory = newTempDirectory;
             }
             string? configuredApplicationName = this.GetStringValue("PRODUCTNAME", "");
@@ -725,7 +724,7 @@ namespace NetEti.ApplicationEnvironment
                 {
                     try
                     {
-                        this.UserSettingsAccessor = new XmlAccess(this.AppConfigUser);
+                        this.UserSettingsAccessor = new UserSettingsAccess(this.AppConfigUser);
                         this.AppEnvAccessor.RegisterStringValueGetterBefore(this.UserSettingsAccessor, this.SettingsAccessor);
                         this.AppConfigUserLoaded = true;
                         this.AppConfigUserInfo = "AppConfigUser erfolgreich geladen.";
@@ -932,7 +931,7 @@ namespace NetEti.ApplicationEnvironment
         /// <summary>
         /// Implementiert IGetStringValue für Zugriffe auf die app.config.user.
         /// </summary>
-        protected XmlAccess? UserSettingsAccessor { get; private set; }
+        protected UserSettingsAccess? UserSettingsAccessor { get; private set; }
 
         /// <summary>
         /// Implementiert IGetStringValue für Zugriffe auf das Environment.
