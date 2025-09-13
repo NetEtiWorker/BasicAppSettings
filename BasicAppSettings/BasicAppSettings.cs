@@ -21,8 +21,8 @@ namespace NetEti.ApplicationEnvironment
     /// abgeleitet werden.
     /// Quellen werden in folgender Reihenfolge ausgewertet (der 1. Treffer gewinnt):<br></br>
     ///     1. Kommandozeilen-Parameter (nicht bei .NetCore-Webanwendungen)<br></br>
-    ///     2. Einstellungen in der app.Config (nicht bei .NetCore- Webanwendungen, stattdessen dann appsettings.json)<br></br>
-    ///     3. Ggf. Einstellungen in der app.Config.user<br></br>
+    ///     2. Ggf. Einstellungen in der app.config.user<br></br>
+    ///     3. Einstellungen in der app.config (nicht bei .NetCore- Webanwendungen, stattdessen dann appsettings.json)<br></br>
     ///     4. Environment<br></br>
     ///     5. Registry<br></br>
     ///     6. Unter Umständen öffentliche Properties (DumpAppSettings=true).<br></br>
@@ -50,6 +50,7 @@ namespace NetEti.ApplicationEnvironment
     /// 09.03.2019 Erik Nagel: DumpAppSettings und DumpLoadedAssemblies eingeführt.<br></br>
     /// 05.04.2020 Erik Nagel: .NetCore-fähig gemacht; Newtosoft.json integriert; Version 4.6.1.<br></br>
     /// 19.12.2024 Erik Nagel: Language implementiert; Version auf 8.0.1.0.<br></br>
+    /// 10.06.2025 Erik Nagel: XmlAccess durch UserSettingsAccess ersetzt, dadurch u.a. Json-Unterstützung erreicht.<br></br>
     /// </remarks>
     public class BasicAppSettings : IGetStringValue, IGetValue, IDisposable
     {
@@ -64,7 +65,7 @@ namespace NetEti.ApplicationEnvironment
         public string ApplicationName { get; private set; }
 
         /// <summary>
-        /// Pfad einer XML-Datei im Format der app.config mit User-spezifischen Einstellungen.
+        /// Pfad einer XML- oder Json-Datei analog zu app.config oder appsettings mit User-spezifischen Einstellungen.
         /// </summary>
         public string? AppConfigUser { get; private set; }
 
@@ -74,8 +75,7 @@ namespace NetEti.ApplicationEnvironment
         public string? AppConfigUserInfo { get; private set; }
 
         /// <summary>
-        /// True wenn eine XML-Datei im Format der app.config mit User-spezifischen Einstellungen
-        /// geladen werden konnte.
+        /// True wenn eine Datei mit User-spezifischen Einstellungen geladen werden konnte.
         /// </summary>
         public bool AppConfigUserLoaded { get; private set; }
 
